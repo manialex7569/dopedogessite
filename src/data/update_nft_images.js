@@ -1,0 +1,16 @@
+const fs = require('fs');
+const path = require('path');
+
+const filePath = path.join(__dirname, 'nfts.json');
+
+const nfts = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+
+nfts.forEach(nft => {
+  if (nft['Inscription ID']) {
+    nft['Image'] = `https://doggy.market/inscription/${nft['Inscription ID']}`;
+  }
+});
+
+fs.writeFileSync(filePath, JSON.stringify(nfts, null, 2), 'utf-8');
+
+console.log('NFT image URLs updated!'); 
